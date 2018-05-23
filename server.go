@@ -31,6 +31,7 @@ func serveWS(w http.ResponseWriter, r *http.Request) {
 		return nil
 	})
 	done := make(chan bool)
+	defer close(done)
 	go func() {
 		ticker := time.NewTicker(pingPeriod)
 		defer ticker.Stop()
@@ -60,7 +61,6 @@ func serveWS(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
-	close(done)
 }
 
 func main() {
